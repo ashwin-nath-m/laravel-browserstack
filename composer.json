@@ -1,0 +1,58 @@
+{
+    "name": "chinleung/laravel-browserstack",
+    "description": "Run Laravel Dusk tests on BrowserStack.",
+    "keywords": [
+        "chinleung",
+        "laravel-browserstack",
+        "laravel-dusk",
+        "testing",
+        "automate",
+        "browserstack"
+    ],
+    "homepage": "https://github.com/chinleung/laravel-browserstack",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Chin Leung",
+            "email": "hello@chinleung.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "browserstack/browserstack-local": "^1.1",
+        "guzzlehttp/guzzle": "^6.5",
+        "illuminate/support": "~5.8.0|^6.0",
+        "laravel/dusk": "^5.9"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.8.*",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ChinLeung\\BrowserStack\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ChinLeung\\BrowserStack\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ChinLeung\\BrowserStack\\BrowserStackServiceProvider"
+            ]
+        }
+    }
+}
