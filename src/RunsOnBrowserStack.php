@@ -8,7 +8,6 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use PHPUnit\Runner\BaseTestRunner;
 
 trait RunsOnBrowserStack
@@ -102,21 +101,6 @@ trait RunsOnBrowserStack
         $slug = $this->getBrowserSlug();
 
         return array_merge($this->detectOs($slug), $this->detectBrowser($slug));
-
-        if (Str::startsWith($browser, 'MACOS')) {
-            Arr::set($capabilities, 'os', 'OS X');
-            Arr::set($capabilities, 'os_version', 'Catalina');
-
-            preg_match('/MACOS_(CATALINA|MOJAVE|HIGH_SIERRA|SIERRA|EL_CAPITAN|YOSEMITE|MAVERICKS|MOUNTAIN_LION|LION|SNOW_LEOPARD)_/', $browser, $os);
-
-            if ($os) {
-                Arr::set(
-                    $capabilities,
-                    'os_version',
-                    Str::title(str_replace('_', ' ', $os[1]))
-                );
-            }
-        }
     }
 
     /**
@@ -145,7 +129,7 @@ trait RunsOnBrowserStack
     protected function detectOs(string $slug): array
     {
         preg_match(
-            '/(MACOS_(MOJAVE|HIGH_SIERRA|SIERRA|EL_CAPITAN|YOSEMITE|MAVERICKS|MOUNTAIN_LION|LION|SNOW_LEOPARD)|WINDOWS_(10|8(\.1)?|XP))/',
+            '/(MACOS_(CATALINA|MOJAVE|HIGH_SIERRA|SIERRA|EL_CAPITAN|YOSEMITE|MAVERICKS|MOUNTAIN_LION|LION|SNOW_LEOPARD)|WINDOWS_(10|8(\.1)?|XP))/',
             $slug,
             $os
         );
