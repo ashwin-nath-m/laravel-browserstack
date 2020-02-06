@@ -1,5 +1,8 @@
 # Laravel BrowserStack
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/chinleung/laravel-browserstack.svg?style=flat-square)](https://packagist.org/packages/chinleung/laravel-browserstack)
+[![Total Downloads](https://img.shields.io/packagist/dt/chinleung/laravel-browserstack.svg?style=flat-square)](https://packagist.org/packages/chinleung/laravel-browserstack)
+
 A package to run Laravel Dusk tests on BrowserStack.
 
 ## Installation
