@@ -307,8 +307,8 @@ trait RunsOnBrowserStack
                     'reason' => $this->getStatusMessage(),
                 ]),
                 'auth' => [
-                    config('services.browserstack.username'),
-                    config('services.browserstack.key'),
+                    config('browserstack.username'),
+                    config('browserstack.key'),
                 ],
             ]
         );
