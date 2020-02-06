@@ -127,7 +127,7 @@ trait RunsOnBrowserStack
      */
     protected function detectBrowser(string $slug): array
     {
-        preg_match('/(IE|EDGE|CHROME|FIREFOX|SAFARI)(\d*)/', $slug, $browser);
+        preg_match('/(IE|EDGE|CHROME|FIREFOX|SAFARI|OPERA)(\d*)/', $slug, $browser);
 
         return array_filter([
             'browser' => $browser[1],
