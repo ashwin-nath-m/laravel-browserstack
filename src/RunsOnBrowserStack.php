@@ -107,7 +107,7 @@ trait RunsOnBrowserStack
             Arr::set($capabilities, 'os', 'OS X');
             Arr::set($capabilities, 'os_version', 'Catalina');
 
-            preg_match('/MACOS_(MOJAVE|HIGH_SIERRA|SIERRA|EL_CAPITAN|YOSEMITE|MAVERICKS|MOUNTAIN_LION|LION|SNOW_LEOPARD)_/', $browser, $os);
+            preg_match('/MACOS_(CATALINA|MOJAVE|HIGH_SIERRA|SIERRA|EL_CAPITAN|YOSEMITE|MAVERICKS|MOUNTAIN_LION|LION|SNOW_LEOPARD)_/', $browser, $os);
 
             if ($os) {
                 Arr::set(
