@@ -61,4 +61,47 @@ return [
         'resolution' => env('BROWSERSTACK_RESOLUTION', '1920x1080'),
 
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Command Arguments
+    |--------------------------------------------------------------------------
+    |
+    | The arguments and flags to use for the BrowserStack local connection.
+    |
+    */
+
+    'arguments' => [
+
+        'binaryPath' => env('BROWSERSTACK_CLI_BINARY_PATH'),
+
+        'logFile' => env('BROWSERSTACK_CLI_LOG_FILE'),
+
+        'v' => env('BROWSERSTACK_CLI_VERBOSE'),
+
+        'force' => env('BROWSERSTACK_CLI_FORCE'),
+
+        'only' => env('BROWSERSTACK_CLI_ONLY'),
+
+        'onlyAutomate' => env('BROWSERSTACK_CLI_ONLY_AUTOMATE'),
+
+        'forcelocal' => env('BROWSERSTACK_CLI_FORCE_LOCAL', env('BROWSERSTACK_LOCAL_TUNNEL')),
+
+        'localIdentifier' => env('BROWSERSTACK_CLI_LOCAL_IDENTIFIER'),
+
+        'proxyHost' => env('BROWSERSTACK_CLI_PROXY_HOST'),
+
+        'proxyPort' => env('BROWSERSTACK_CLI_PROXY_PORT'),
+
+        'proxyUser' => env('BROWSERSTACK_CLI_PROXY_USER'),
+
+        'proxyPass' => env('BROWSERSTACK_CLI_PROXY_PASSWORD'),
+
+        'forceproxy' => env('BROWSERSTACK_CLI_FORCE_PROXY'),
+
+        'hosts' => env('BROWSERSTACK_CLI_HOSTS'),
+
+        'f' => env('BROWSERSTACK_CLI_F'),
+
+    ],
 ];

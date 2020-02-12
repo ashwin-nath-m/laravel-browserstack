@@ -183,10 +183,9 @@ trait RunsOnBrowserStack
         if (is_null(static::$connection)) {
             static::$connection = new Local;
 
-            static::$connection->start(array_filter([
+            static::$connection->start(array_filter(array_merge([
                 'key' => config('browserstack.key'),
-                'forcelocal' => config('browserstack.capabilities.browserstack.local') ? true : null,
-            ]));
+            ], config('browserstack.arguments'))));
         }
 
         static::afterClass(function () {
