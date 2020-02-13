@@ -298,5 +298,9 @@ trait RunsOnBrowserStack
                 ],
             ]
         );
+
+        if (config('browserstack.separate_sessions')) {
+            $browser->quit();
+        }
     }
 }
