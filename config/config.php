@@ -85,7 +85,10 @@ return [
 
         'onlyAutomate' => env('BROWSERSTACK_CLI_ONLY_AUTOMATE'),
 
-        'forcelocal' => env('BROWSERSTACK_CLI_FORCE_LOCAL', env('BROWSERSTACK_LOCAL_TUNNEL')),
+        'forcelocal' => env(
+            'BROWSERSTACK_CLI_FORCE_LOCAL',
+            env('BROWSERSTACK_LOCAL_TUNNEL', true)
+        ),
 
         'localIdentifier' => env('BROWSERSTACK_CLI_LOCAL_IDENTIFIER'),
 
