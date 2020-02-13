@@ -190,6 +190,8 @@ trait RunsOnBrowserStack
 
         static::afterClass(function () {
             optional(static::$connection)->stop();
+
+            static::$connection = null;
         });
     }
 
