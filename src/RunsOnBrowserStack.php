@@ -28,9 +28,8 @@ trait RunsOnBrowserStack
     protected function tearDown(): void
     {
         if ($this->hasActiveBrowserStackConnection()) {
-            $this->updateBrowserStackSessionStatus();
-
             if (config('browserstack.separate_sessions')) {
+                $this->updateBrowserStackSessionStatus();
                 static::closeAll();
             }
         }
