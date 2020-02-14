@@ -52,11 +52,15 @@ return [
 
         'acceptSslCerts' => env('BROWSERSTACK_ACCEPT_SSL', true),
 
-        'browserstack.local' => env('BROWSERSTACK_LOCAL_TUNNEL', true),
+        'browserstack' => [
 
-        'browserstack.console' => env('BROWSERSTACK_CONSOLE', 'verbose'),
+            'console' => env('BROWSERSTACK_CONSOLE', 'verbose'),
 
-        'browserstack.timezone' => env('BROWSERSTACK_TIMEZONE', config('app.timezone')),
+            'local' => env('BROWSERSTACK_LOCAL_TUNNEL', true),
+
+            'timezone' => env('BROWSERSTACK_TIMEZONE', config('app.timezone')),
+
+        ],
 
         'resolution' => env('BROWSERSTACK_RESOLUTION', '1920x1080'),
 
@@ -87,7 +91,7 @@ return [
 
         'forcelocal' => env(
             'BROWSERSTACK_CLI_FORCE_LOCAL',
-            env('BROWSERSTACK_LOCAL_TUNNEL', true)
+            config('browserstack.capabilities.browserstack.local')
         ),
 
         'localIdentifier' => env('BROWSERSTACK_CLI_LOCAL_IDENTIFIER'),

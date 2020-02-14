@@ -153,7 +153,7 @@ trait RunsOnBrowserStack
                 'build' => $this->getBuildName(),
                 'name' => $this->getSessionName(),
             ],
-            config('browserstack.capabilities'),
+            Arr::dot(config('browserstack.capabilities')),
             $this->browserCapabilities()
         );
     }
