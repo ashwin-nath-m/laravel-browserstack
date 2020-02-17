@@ -4,6 +4,8 @@ namespace ChinLeung\BrowserStack;
 
 use BrowserStack\Local;
 use Facebook\WebDriver\Chrome\ChromeOptions;
+use Facebook\WebDriver\Firefox\FirefoxPreferences;
+use Facebook\WebDriver\Firefox\FirefoxProfile;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use GuzzleHttp\Client;
@@ -112,10 +114,27 @@ trait RunsOnBrowserStack
     {
         preg_match('/(IE|EDGE|CHROME|FIREFOX|SAFARI|OPERA)(\d*)/', $slug, $browser);
 
-        return array_filter([
+        $capabilities = array_filter([
             'browser' => $browser[1],
             'browser_version' => $browser[2],
         ]);
+
+        // Disable the Devtools JSONView of Firefox which causes error when
+        // parsing a JSON response.
+        if ($browser[1] == 'FIREFOX') {
+            $caps = DesiredCapabilities::firefox();
+
+            $profile = new FirefoxProfile;
+            $profile->setPreference('devtools.jsonview.enabled', false);
+            $profile->setPreference(
+                FirefoxPreferences::READER_PARSE_ON_LOAD_ENABLED,
+                false
+            );
+
+            $capabilities = array_merge($capabilities, $caps->toArray());
+        }
+
+        return $capabilities;
     }
 
     /**
@@ -144,7 +163,7 @@ trait RunsOnBrowserStack
      *
      * @link https://www.browserstack.com/automate/capabilities
      * @return array
-    */
+     */
     protected function capabilitiesForBrowserStack(): array
     {
         return array_merge(
@@ -162,7 +181,7 @@ trait RunsOnBrowserStack
      * Retrieve the endpoint for BrowserStack.
      *
      * @return string
-    */
+     */
     protected function endpointForBrowserStack(): string
     {
         return sprintf(
