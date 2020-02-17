@@ -91,7 +91,7 @@ return [
 
         'forcelocal' => env(
             'BROWSERSTACK_CLI_FORCE_LOCAL',
-            config('browserstack.capabilities.browserstack.local')
+            env('BROWSERSTACK_LOCAL_TUNNEL', true)
         ),
 
         'localIdentifier' => env('BROWSERSTACK_CLI_LOCAL_IDENTIFIER'),
