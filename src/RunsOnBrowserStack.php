@@ -79,7 +79,7 @@ trait RunsOnBrowserStack
         return RemoteWebDriver::create(
             $this->endpointForBrowserStack(),
             $this->capabilitiesForBrowserStack(),
-            config('browserstack.connection')
+            config('browserstack.connection.timeout')
         );
     }
 
