@@ -22,6 +22,13 @@ trait RunsOnBrowserStack
     protected static $connection;
 
     /**
+     * The BrowserStack capabitities.
+     *
+     * @var array
+     */
+    protected static $capabilities = [];
+
+    /**
      * Update the BrowserStack status if the test has run on BrowserStack
      * and close the current session if the user wants one test per session.
      *
@@ -166,15 +173,20 @@ trait RunsOnBrowserStack
      */
     protected function capabilitiesForBrowserStack(): array
     {
-        return array_merge(
-            [
-                'project' => $this->getProjectName(),
-                'build' => $this->getBuildName(),
-                'name' => $this->getSessionName(),
-            ],
-            Arr::dot(config('browserstack.capabilities')),
-            $this->browserCapabilities()
-        );
+        $slug = $this->getBrowserSlug();
+
+        if (! isset(static::$capabilities[$slug])) {
+            static::$capabilities[$slug] = array_merge(
+                Arr::dot(config('browserstack.capabilities')),
+                $this->browserCapabilities()
+            );
+        }
+
+        return array_merge(static::$capabilities[$slug], [
+            'project' => $this->getProjectName(),
+            'build' => $this->getBuildName(),
+            'name' => $this->getSessionName(),
+        ]);
     }
 
     /**
