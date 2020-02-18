@@ -198,12 +198,10 @@ trait RunsOnBrowserStack
      */
     protected function connectToBrowserStack(): void
     {
-        if (is_null(static::$connection)) {
-            static::$connection = new Local;
-
-            static::$connection->start(array_filter(array_merge([
-                'key' => config('browserstack.key'),
-            ], config('browserstack.arguments'))));
+        if ($this->notConnectedToBrowserStack()) {
+            static::$connection = tap(new Local)->start(
+                $this->argumentsForBrowserStack()
+            );
         }
 
         static::afterClass(function () {
@@ -320,5 +318,31 @@ trait RunsOnBrowserStack
         if (config('browserstack.separate_sessions')) {
             $browser->quit();
         }
+    }
+
+    /**
+     * Verify if the connection to BrowserStack has not been made.
+     *
+     * @return bool
+     */
+    protected function notConnectedToBrowserStack(): bool
+    {
+        return is_null(static::$connection)
+            || ! static::$connection->isRunning();
+    }
+
+    /**
+     * Retrieve the arguments for the BrowserStack connection.
+     *
+     * @return array
+     */
+    protected function argumentsForBrowserStack(): array
+    {
+        return array_filter(array_merge(
+            [
+                'key' => config('browserstack.key'),
+            ],
+            config('browserstack.arguments')
+        ));
     }
 }
