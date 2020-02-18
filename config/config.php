@@ -111,4 +111,19 @@ return [
         'f' => env('BROWSERSTACK_CLI_F'),
 
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Connection
+    |--------------------------------------------------------------------------
+    |
+    | Configuration for the remote web driver connection.
+    |
+    */
+
+    'connection' => [
+
+        'timeout' => 30000,
+
+    ],
 ];
