@@ -177,17 +177,16 @@ trait RunsOnBrowserStack
 
         if (! isset(static::$capabilities[$slug])) {
             static::$capabilities[$slug] = array_merge(
-                [
-                    'project' => $this->getProjectName(),
-                    'build' => $this->getBuildName(),
-                    'name' => $this->getSessionName(),
-                ],
                 Arr::dot(config('browserstack.capabilities')),
                 $this->browserCapabilities()
             );
         }
 
-        return static::$capabilities[$slug];
+        return array_merge(static::$capabilities[$slug], [
+            'project' => $this->getProjectName(),
+            'build' => $this->getBuildName(),
+            'name' => $this->getSessionName(),
+        ]);
     }
 
     /**
