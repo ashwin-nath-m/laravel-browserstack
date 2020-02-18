@@ -1,6 +1,6 @@
 <?php
 
-namespace ChinLeung\BrowserStack;
+namespace Tests\Browser\Concerns;
 
 use BrowserStack\Local;
 use Facebook\WebDriver\Chrome\ChromeOptions;
@@ -27,6 +27,13 @@ trait RunsOnBrowserStack
      * @var array
      */
     protected static $capabilities = [];
+
+    /**
+     * Flag to know if the after class callback has been registered.
+     *
+     * @var bool
+     */
+    protected static $registeredAfterClassCallback = false;
 
     /**
      * Update the BrowserStack status if the test has run on BrowserStack
@@ -210,16 +217,26 @@ trait RunsOnBrowserStack
      */
     protected function connectToBrowserStack(): void
     {
-        if ($this->notConnectedToBrowserStack()) {
+        if ($this->connectedToBrowserStack()) {
+            return;
+        }
+
+        rescue(function () {
             static::$connection = tap(new Local)->start(
                 $this->argumentsForBrowserStack()
             );
-        }
+            $this->connectedToBrowserStack();
 
-        static::afterClass(function () {
-            optional(static::$connection)->stop();
+            if (! static::$registeredAfterClassCallback) {
+                static::$registeredAfterClassCallback = true;
 
-            static::$connection = null;
+                static::afterClass(function () {
+                    optional(static::$connection)->stop();
+                    $this->connectedToBrowserStack();
+
+                    static::$connection = null;
+                });
+            }
         });
     }
 
@@ -326,21 +343,16 @@ trait RunsOnBrowserStack
                 ],
             ]
         );
-
-        if (config('browserstack.separate_sessions')) {
-            $browser->quit();
-        }
     }
 
     /**
-     * Verify if the connection to BrowserStack has not been made.
+     * Verify if the connection to BrowserStack has been made.
      *
      * @return bool
      */
-    protected function notConnectedToBrowserStack(): bool
+    protected function connectedToBrowserStack(): bool
     {
-        return is_null(static::$connection)
-            || ! static::$connection->isRunning();
+        return ! is_null(static::$connection) && static::$connection->isRunning();
     }
 
     /**
