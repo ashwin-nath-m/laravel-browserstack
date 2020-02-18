@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser\Concerns;
+namespace ChinLeung\BrowserStack;
 
 use BrowserStack\Local;
 use Facebook\WebDriver\Chrome\ChromeOptions;
