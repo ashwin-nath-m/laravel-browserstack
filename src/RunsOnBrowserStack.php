@@ -197,14 +197,14 @@ trait RunsOnBrowserStack
      */
     protected function detectMobileOs(string $slug): array
     {
-        preg_match('/_(.*)/', $slug, $os);
+        preg_match('/(ANDROID|IOS)_(.*)/', $slug, $os);
 
-        $method = strpos($slug, 'ANDROID') !== false ? 'android' : (
-            strpos($slug, 'IPHONE') !== false ? 'iphone' : 'ipad'
+        $method = $os[1] == 'ANDROID' ? 'android' : (
+            strpos($os[2], 'IPHONE') !== false ? 'iphone' : 'ipad'
         );
 
         return array_merge([
-            'device' => str_replace('_', ' ', $os[1]),
+            'device' => str_replace('_', ' ', $os[2]),
             'real_mobile' => true,
         ], DesiredCapabilities::$method()->toArray());
     }
