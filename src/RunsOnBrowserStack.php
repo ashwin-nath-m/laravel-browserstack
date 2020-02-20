@@ -4,6 +4,7 @@ namespace ChinLeung\BrowserStack;
 
 use BrowserStack\Local;
 use Facebook\WebDriver\Chrome\ChromeOptions;
+use Facebook\WebDriver\Firefox\FirefoxDriver;
 use Facebook\WebDriver\Firefox\FirefoxPreferences;
 use Facebook\WebDriver\Firefox\FirefoxProfile;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
@@ -126,7 +127,7 @@ trait RunsOnBrowserStack
      */
     protected function detectBrowser(string $slug): array
     {
-        preg_match('/(IE|EDGE|CHROME|FIREFOX|SAFARI|OPERA)(\d*)/', $slug, $browser);
+        preg_match('/_(IE|EDGE|CHROME|FIREFOX|SAFARI|OPERA)(\d*)/', $slug, $browser);
 
         $capabilities = array_filter([
             'browser' => $browser[1],
@@ -145,10 +146,18 @@ trait RunsOnBrowserStack
                 false
             );
 
-            $capabilities = array_merge($capabilities, $caps->toArray());
+            $caps->setCapability(FirefoxDriver::PROFILE, $profile);
+        } else {
+            $method = str_replace(
+                ['ie', 'edge'],
+                ['internetExplorer', 'microsoftEdge'],
+                strtolower($browser[1])
+            );
+
+            $caps = DesiredCapabilities::$method()->toArray();
         }
 
-        return $capabilities;
+        return array_merge($capabilities, $caps->toArray());
     }
 
     /**
@@ -160,6 +169,10 @@ trait RunsOnBrowserStack
      */
     protected function detectOs(string $slug): array
     {
+        if (strpos($slug, 'IOS_') === 0 || strpos($slug, 'ANDROID_') === 0) {
+            return $this->detectMobileOs($slug);
+        }
+
         preg_match(
             '/(MACOS_(CATALINA|MOJAVE|HIGH_SIERRA|SIERRA|EL_CAPITAN|YOSEMITE|MAVERICKS|MOUNTAIN_LION|LION|SNOW_LEOPARD)|WINDOWS_(10|8(\.1)?|XP))/',
             $slug,
@@ -168,8 +181,32 @@ trait RunsOnBrowserStack
 
         return [
             'os' => strpos($slug, 'WINDOWS') !== false ? 'Windows' : 'OS X',
-            'os_version' => isset($os[3]) ? $os[3] : $os[2],
+            'os_version' => str_replace(
+                '_',
+                ' ',
+                isset($os[3]) ? $os[3] : $os[2]
+            ),
         ];
+    }
+
+    /**
+     * Detect the correct operating system for a mobile device.
+     *
+     * @param  string  $array
+     * @return array
+     */
+    protected function detectMobileOs(string $slug): array
+    {
+        preg_match('/_(.*)/', $slug, $os);
+
+        $method = strpos($slug, 'ANDROID') !== false ? 'android' : (
+            strpos($slug, 'IPHONE') !== false ? 'iphone' : 'ipad'
+        );
+
+        return array_merge([
+            'device' => str_replace('_', ' ', $os[1]),
+            'real_mobile' => true,
+        ], DesiredCapabilities::$method()->toArray());
     }
 
     /**
