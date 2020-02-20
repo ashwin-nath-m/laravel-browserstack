@@ -159,6 +159,39 @@ You can find below the list of available slugs for the browser option.
 - ANDROID_ONEPLUS_6T
 </details>
 
+
+
+<details>
+  <summary>IOS</summary>
+
+- IOS_IPHONE_XS
+- IOS_IPHONE_11_PRO_MAX
+- IOS_IPHONE_11_PRO
+- IOS_IPHONE_11
+- IOS_IPHONE_XS
+- IOS_IPHONE_XS_MAX
+- IOS_IPHONE_XR
+- IOS_IPHONE_X
+- IOS_IPHONE_8
+- IOS_IPHONE_8_PLUS
+- IOS_IPHONE_7
+- IOS_IPHONE_7_PLUS
+- IOS_IPHONE_6S
+- IOS_IPHONE_6_PLUS
+- IOS_IPHONE_6
+- IOS_IPHONE_SE
+- IOS_IPAD_PRO_12.9_2018
+- IOS_IPAD_7TH
+- IOS_IPAD_PRO_11_2018
+- IOS_IPAD_MINI_2019
+- IOS_IPAD_AIR_2019
+- IOS_IPAD_PRO_9.7_2016
+- IOS_IPAD_PRO_12.9_2017
+- IOS_IPAD_MINI_4
+- IOS_IPAD_6TH
+- IOS_IPAD_5TH
+</details>
+
 The list of possible combinations of OS, Browsers and Browser Versions are available here: https://www.browserstack.com/automate/capabilities
 
 ## Security
