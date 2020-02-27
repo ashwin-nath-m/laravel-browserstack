@@ -154,7 +154,7 @@ trait RunsOnBrowserStack
                 strtolower($browser[1])
             );
 
-            $caps = DesiredCapabilities::$method()->toArray();
+            $caps = DesiredCapabilities::$method();
         }
 
         return array_merge($capabilities, $caps->toArray());
