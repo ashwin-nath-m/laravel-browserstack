@@ -1,5 +1,5 @@
 {
-    "name": "chinleung/laravel-browserstack",
+    "name": "ashwin-nath-m/laravel-browserstack",
     "description": "Run Laravel Dusk tests on BrowserStack.",
     "keywords": [
         "chinleung",
@@ -9,7 +9,7 @@
         "automate",
         "browserstack"
     ],
-    "homepage": "https://github.com/chinleung/laravel-browserstack",
+    "homepage": "https://github.com/ashwin-nath-m/laravel-browserstack",
     "license": "MIT",
     "type": "library",
     "authors": [
